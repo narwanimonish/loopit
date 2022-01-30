@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['throttle:3,1'])->post('/email/verify/resend', [AuthController::class, 'resendVerification'])->name('verification.resend');
 
     Route::get('/user', [UserController::class, 'whoAmI'])->name('user.details');
+    Route::get('/cars', [CarController::class, 'listAvailableCars'])->name('cars.list');
 });

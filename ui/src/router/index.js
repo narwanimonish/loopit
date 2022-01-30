@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
+import CarsList from '../views/CarsList.vue';
+import { ifAuthenticated } from './../router/helper';
 
 const routes = [
   {
@@ -12,6 +14,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/',
+    name: 'CarsList',
+    component: CarsList,
+    beforeEnter: ifAuthenticated,
   },
 ];
 

@@ -1,9 +1,5 @@
 <template>
   <div class="container mt-5 px-lg-5">
-    <router-link class="nav-link" :to="{ name: 'Login' }"> Login </router-link>
-    <router-link class="nav-link" :to="{ name: 'Register' }">
-      Register
-    </router-link>
     <router-view />
   </div>
 </template>

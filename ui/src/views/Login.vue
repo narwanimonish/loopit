@@ -39,12 +39,16 @@
                 </div>
 
                 <div class="d-flex justify-content-around align-items-center">
-                  <a href="#!">New User? Register here..</a>
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg btn-block"
+                  >
+                    Sign in
+                  </button>
+                  <router-link :to="{ name: 'Register' }">
+                    New User? Register here..
+                  </router-link>
                 </div>
-
-                <button type="submit" class="btn btn-primary btn-lg btn-block">
-                  Sign in
-                </button>
               </form>
             </div>
           </div>
@@ -64,7 +68,7 @@ export default {
       errors: this.defaultError(),
     };
   },
-  async created() {},
+  created() {},
   methods: {
     defaultError() {
       return {
@@ -83,7 +87,8 @@ export default {
           this.success(response.data);
         }
       } catch (error) {
-        if (error.response.status == 422) {
+        console.log(error);
+        if (error.response?.status == 422) {
           const errors = error.response.data.errors;
           this.errors.email = errors.email ? errors.email[0] : null;
           this.errors.password = errors.password ? errors.password[0] : null;
@@ -91,7 +96,8 @@ export default {
       }
     },
     success(data) {
-      console.log(data);
+      window.localStorage.setItem('token', data.data.token);
+      this.$router.push({ name: 'CarsList' });
     },
   },
 };
