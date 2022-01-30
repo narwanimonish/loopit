@@ -17,4 +17,13 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'validate' => 'Confirm the email, before proceeding with application',
+    'already_validated' => 'The email is already verified. Please login.',
+    'validated' => 'The email is now verified.',
+    'resend_validate' => 'Email resend.',
+    'registered' => 'Thanks for signing up. Please confirm your email by clicking on link received.',
+    'login' => 'Login Successful.',
+    'details' => 'User Details.',
+
+
 ];
