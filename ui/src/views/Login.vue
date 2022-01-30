@@ -5,14 +5,21 @@
         <div class="container py-5 h-100">
           <div class="row d-flex align-items-center justify-content-center">
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-              <form>
+              <form class="" @submit.prevent="login">
                 <div class="form-outline mb-4">
                   <label class="form-label" for="email">Email address</label>
                   <input
                     type="email"
                     id="email"
-                    class="form-control form-control-lg"
+                    :class="[
+                      'form-control form-control-lg',
+                      errors.email ? 'is-invalid' : '',
+                    ]"
+                    v-model="email"
                   />
+                  <div class="invalid-feedback" v-if="errors.email">
+                    {{ errors.email }}
+                  </div>
                 </div>
 
                 <div class="form-outline mb-4">
@@ -20,8 +27,15 @@
                   <input
                     type="password"
                     id="password"
-                    class="form-control form-control-lg"
+                    :class="[
+                      'form-control form-control-lg',
+                      errors.password ? 'is-invalid' : '',
+                    ]"
+                    v-model="password"
                   />
+                  <div class="invalid-feedback" v-if="errors.password">
+                    {{ errors.password }}
+                  </div>
                 </div>
 
                 <div class="d-flex justify-content-around align-items-center">
@@ -39,3 +53,46 @@
     </div>
   </div>
 </template>
+
+<script>
+import { login } from './../api-urls';
+export default {
+  data() {
+    return {
+      email: null,
+      password: null,
+      errors: this.defaultError(),
+    };
+  },
+  async created() {},
+  methods: {
+    defaultError() {
+      return {
+        email: null,
+        password: null,
+      };
+    },
+    async login() {
+      this.errors = this.defaultError();
+      try {
+        const response = await this.axios.post(login, {
+          email: this.email,
+          password: this.password,
+        });
+        if (response.status == 200) {
+          this.success(response.data);
+        }
+      } catch (error) {
+        if (error.response.status == 422) {
+          const errors = error.response.data.errors;
+          this.errors.email = errors.email ? errors.email[0] : null;
+          this.errors.password = errors.password ? errors.password[0] : null;
+        }
+      }
+    },
+    success(data) {
+      console.log(data);
+    },
+  },
+};
+</script>
